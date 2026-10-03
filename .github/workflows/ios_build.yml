@@ -26,7 +26,6 @@ jobs:
         run: |
           rm -rf ios
           flutter create --platforms=ios --project-name=racebox .
-          python3 tool/patch_ios.py
 
       - name: Get dependencies
         run: flutter pub get
