@@ -29,3 +29,24 @@ jobs:
 
       - name: Get dependencies
         run: flutter pub get
+
+      - name: Build iOS
+        run: |
+          flutter build ipa --release --no-codesign
+
+      - name: Find build output
+        run: |
+          echo "===== IPA ====="
+          find build -type f -name "*.ipa" -print || true
+
+          echo "===== XCARCHIVE ====="
+          find build -type d -name "*.xcarchive" -print || true
+
+      - name: Upload iOS build
+        uses: actions/upload-artifact@v4
+        with:
+          name: racebox-ios-build
+          path: |
+            build/ios/ipa/*.ipa
+            build/ios/archive/*.xcarchive
+          if-no-files-found: error
