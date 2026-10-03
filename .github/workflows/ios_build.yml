@@ -25,20 +25,8 @@ jobs:
       - name: Prepare iOS project
         run: |
           rm -rf ios
-          flutter create --platforms=ios .
+          flutter create --platforms=ios --project-name=racebox .
           python3 tool/patch_ios.py
 
       - name: Get dependencies
         run: flutter pub get
-
-      - name: Build iOS
-        run: flutter build ipa --release --no-codesign
-
-      - name: Upload iOS build
-        uses: actions/upload-artifact@v4
-        with:
-          name: raceboox-ios-unsigned
-          path: |
-            build/ios/archive/*.xcarchive
-            build/ios/ipa/*.ipa
-          if-no-files-found: warn
